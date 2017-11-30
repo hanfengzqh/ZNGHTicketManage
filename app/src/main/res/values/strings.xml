@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">ZNGHTicketManage</string>
+    <string name="bt_dev_bind">设备绑定</string>
+    <string name="bt_dev_unbind">设备解绑</string>
+    <string name="bt_activate_quire">激活查询</string>
+    <string name="bt_red_ticket_bill">红票开票</string>
+    <string name="bt_blue_ticket_bill">蓝票开票</string>
+
+</resources>
