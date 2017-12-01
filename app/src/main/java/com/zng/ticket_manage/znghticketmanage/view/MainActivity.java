@@ -1,9 +1,11 @@
 package com.zng.ticket_manage.znghticketmanage.view;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.orhanobut.logger.Logger;
 import com.zng.ticket_manage.commonlibrary.base.BaseActivity;
 import com.zng.ticket_manage.znghticketmanage.R;
 
@@ -42,19 +44,20 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.bt_dev_bind://设备绑定
-
+                Logger.d("设备绑定");
+            startActivity(new Intent(this,BindActivity.class));
                 break;
             case R.id.bt_dev_unbind://设备解绑
-
+                Logger.d("设备解绑");
                 break;
-            case R.id.bt_activate_quire://设备解绑
-
+            case R.id.bt_activate_quire://激活查询
+                Logger.d("激活查询");
                 break;
-            case R.id.bt_red_ticket_bill://设备解绑
-
+            case R.id.bt_red_ticket_bill://红票开票
+                Logger.d("红票开票");
                 break;
-            case R.id.bt_blue_ticket_bill://设备解绑
-
+            case R.id.bt_blue_ticket_bill://蓝票开票
+                Logger.d("蓝票开票");
                 break;
             default:
                 break;

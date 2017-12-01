@@ -37,6 +37,7 @@ dependencies {
         exclude module: 'support-v4'
     }
     api rootProject.ext.dependencies["annotations"]
+    api 'com.android.support:multidex:1.0.0'
 
     //view
     api(rootProject.ext.dependencies["autolayout"]) {

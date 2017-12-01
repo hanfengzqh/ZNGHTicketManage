@@ -64,4 +64,6 @@ public abstract class BaseActivity extends AppCompatActivity implements IActivit
     public boolean useFragment() {
         return true;
     }
+
+
 }
