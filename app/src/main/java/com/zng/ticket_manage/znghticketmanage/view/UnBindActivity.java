@@ -30,7 +30,7 @@ import okhttp3.Request;
  * Created by zqh on 2017/11/30.
  */
 
-public class BindActivity extends BaseActivity implements View.OnClickListener{
+public class UnBindActivity extends BaseActivity implements View.OnClickListener {
 
     @BindView(R.id.bt_back)
     Button bt_back;
@@ -51,7 +51,6 @@ public class BindActivity extends BaseActivity implements View.OnClickListener{
         mPOSFunctionUtils = new POSFunctionUtils(this);
         bt_back.setOnClickListener(this);
         bindDev();
-
     }
 
     private void bindDev() {
@@ -71,15 +70,14 @@ public class BindActivity extends BaseActivity implements View.OnClickListener{
         byte[] encryData_byte = CertifyDataUtil.encryptData(transKey_byte, clear_data.getBytes());
 
         HashMap<String, String> params = new HashMap();
-        String token_data = SharePreUtil.getString(mContext,Contacts.Key.TOKEN,"");
+        String token_data = SharePreUtil.getString(mContext, Contacts.Key.TOKEN, "");
         params.put(Contacts.Key.DSN, dsnCode.trim());//sn
         params.put(Contacts.Key.VID, vidCode.trim());//vid
         params.put(Contacts.Key.SIGN, certSign);//签名数据
         params.put(Contacts.Key.ENCRY, CommonUtil.byte2Hex(encryData_byte).trim());//加密数据
-        params.put(Contacts.Key.MT,Contacts.Const.DEVICEBIND+"");
-        params.put(Contacts.Key.ST,CommonUtil.getSystemTime().trim());
-        params.put(Contacts.Key.TOKEN,token_data);
-        params.put(Contacts.Key.LANGUAGE,CommonUtil.getCurrentLauguage());
+        params.put(Contacts.Key.MT, Contacts.Const.DEVICEUNBIND + "");
+        params.put(Contacts.Key.ST, CommonUtil.getSystemTime().trim());
+        params.put(Contacts.Key.TOKEN, token_data);
         String mapToJson = JsonUtil.parseMapToJson(params);
         Logger.json(mapToJson);
 
@@ -92,26 +90,27 @@ public class BindActivity extends BaseActivity implements View.OnClickListener{
             @Override
             public void requestSuccess(String result) {
                 Logger.d(result);
-                if (!TextUtils.isEmpty(result)){
+                if (!TextUtils.isEmpty(result)) {
                     ResultInfor infor = JsonUtil.parseJsonToBean(result, ResultInfor.class);
-                    if (infor != null){
+                    if (infor != null) {
                         boolean result1 = infor.isResult();
                         String msg = infor.getMsg();
-                        if (result1){
+                        if (result1) {
                             String msgEncry = infor.getEncry();
                             String sign = infor.getSign();
-                            if (!TextUtils.isEmpty(msgEncry) && !TextUtils.isEmpty(sign)){
+                            if (!TextUtils.isEmpty(msgEncry) && !TextUtils.isEmpty(sign)) {
                                 String bind_data = CertifyDataUtil.serverSignVerify(sign, msgEncry, mPOSFunctionUtils);
-                                Logger.d("bind_data = "+bind_data.trim());
+                                Logger.d("unbind_data = " + bind_data.trim());
                             }
-                        }else{
-                            ToastUtil.showShortToast(mContext,msg+"");
+                        } else {
+                            ToastUtil.showShortToast(mContext, msg + "");
                         }
                     }
                 }
             }
         });
     }
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {

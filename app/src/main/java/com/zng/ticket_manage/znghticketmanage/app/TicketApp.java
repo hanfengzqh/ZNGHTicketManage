@@ -40,7 +40,7 @@ public class TicketApp extends Application {
     private void initLogger() {
         FormatStrategy formatStrategy = PrettyFormatStrategy.newBuilder()
                 .showThreadInfo(false)
-                .methodCount(2)
+                .methodCount(0)
                 .methodOffset(5)
                 .tag("zqh")
                 .build();

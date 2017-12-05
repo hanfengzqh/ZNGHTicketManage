@@ -27,34 +27,54 @@ import butterknife.BindView;
 import okhttp3.Request;
 
 /**
- * Created by zqh on 2017/11/30.
+ * Created by zqh on 2017/12/4.
  */
 
-public class BindActivity extends BaseActivity implements View.OnClickListener{
+public class LoginActivity extends BaseActivity implements View.OnClickListener {
 
+    @BindView(R.id.ed_account)
+    EditText ed_account;
+    @BindView(R.id.ed_password)
+    EditText ed_password;
+    @BindView(R.id.bt_login2)
+    Button bt_login2;
     @BindView(R.id.bt_back)
     Button bt_back;
-    @BindView(R.id.ed_tax_person)
-    EditText ed_tax_person;
 
     private Context mContext;
     private POSFunctionUtils mPOSFunctionUtils;
 
     @Override
     public int initView(Bundle savedInstanceState) {
-        return R.layout.activity_bind;
+        return R.layout.activity_login;
     }
 
     @Override
     public void initData(Bundle savedInstanceState) {
         mContext = this;
         mPOSFunctionUtils = new POSFunctionUtils(this);
+        bt_login2.setOnClickListener(this);
         bt_back.setOnClickListener(this);
-        bindDev();
 
     }
 
-    private void bindDev() {
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.bt_login2:
+                Logger.d("ed_account = " + ed_account.getText().toString());
+                Logger.d("ed_password = " + ed_password.getText().toString());
+                login();
+                break;
+            case R.id.bt_back:
+                finish();
+                break;
+            default:
+                break;
+        }
+    }
+
+    private void login() {
         // 发行商id 00100017
         String vidCode = CommonUtil.getVid(mContext, mPOSFunctionUtils);
         // 发行商SN H111111122
@@ -63,23 +83,23 @@ public class BindActivity extends BaseActivity implements View.OnClickListener{
         String dsnCode = CommonUtil.getDsn();
         String certSign = CertifyDataUtil.getCertSign(mContext, mPOSFunctionUtils);
         byte[] transKey_byte = CertifyDataUtil.getTransKey();
-
-        String tax_person_num = ed_tax_person.getText().toString();
-        tax_person_num = CommonUtil.getTaxPersonNum(tax_person_num);
-        String clear_data = tax_person_num.concat(dsnCode).concat(vidCode);
-        Logger.d("clear_data = " + clear_data);
+        String ed_account_num = ed_account.getText().toString();
+        String ed_password_num = ed_password.getText().toString();
+        ed_account_num = CommonUtil.getAccountNum(ed_account_num);
+        ed_password_num = CommonUtil.getAccountNum(ed_password_num);
+        String clear_data = ed_account_num.concat(ed_password_num).concat(dsnCode).concat(vidCode);
+        Logger.d("login clear_data = " + clear_data);
         byte[] encryData_byte = CertifyDataUtil.encryptData(transKey_byte, clear_data.getBytes());
 
         HashMap<String, String> params = new HashMap();
-        String token_data = SharePreUtil.getString(mContext,Contacts.Key.TOKEN,"");
+
         params.put(Contacts.Key.DSN, dsnCode.trim());//sn
         params.put(Contacts.Key.VID, vidCode.trim());//vid
-        params.put(Contacts.Key.SIGN, certSign);//签名数据
+        params.put(Contacts.Key.SIGN, certSign.trim());//签名数据
         params.put(Contacts.Key.ENCRY, CommonUtil.byte2Hex(encryData_byte).trim());//加密数据
-        params.put(Contacts.Key.MT,Contacts.Const.DEVICEBIND+"");
-        params.put(Contacts.Key.ST,CommonUtil.getSystemTime().trim());
-        params.put(Contacts.Key.TOKEN,token_data);
-        params.put(Contacts.Key.LANGUAGE,CommonUtil.getCurrentLauguage());
+        params.put(Contacts.Key.MT, Contacts.Const.LOGIN + "");
+        params.put(Contacts.Key.ST, CommonUtil.getSystemTime().trim());
+        params.put(Contacts.Key.LANGUAGE, CommonUtil.getCurrentLauguage());
         String mapToJson = JsonUtil.parseMapToJson(params);
         Logger.json(mapToJson);
 
@@ -92,32 +112,25 @@ public class BindActivity extends BaseActivity implements View.OnClickListener{
             @Override
             public void requestSuccess(String result) {
                 Logger.d(result);
-                if (!TextUtils.isEmpty(result)){
+                if (!TextUtils.isEmpty(result)) {
                     ResultInfor infor = JsonUtil.parseJsonToBean(result, ResultInfor.class);
-                    if (infor != null){
+                    if (infor != null) {
                         boolean result1 = infor.isResult();
                         String msg = infor.getMsg();
-                        if (result1){
+                        if (result1) {
                             String msgEncry = infor.getEncry();
                             String sign = infor.getSign();
-                            if (!TextUtils.isEmpty(msgEncry) && !TextUtils.isEmpty(sign)){
-                                String bind_data = CertifyDataUtil.serverSignVerify(sign, msgEncry, mPOSFunctionUtils);
-                                Logger.d("bind_data = "+bind_data.trim());
+                            if (!TextUtils.isEmpty(msgEncry) && !TextUtils.isEmpty(sign)) {
+                                String signVerify = CertifyDataUtil.serverSignVerify(sign, msgEncry, mPOSFunctionUtils);
+                                Logger.d("signVerify = " + signVerify.trim());
+                                SharePreUtil.putString(mContext, Contacts.Key.TOKEN, signVerify.trim());
                             }
-                        }else{
-                            ToastUtil.showShortToast(mContext,msg+"");
+                        } else {
+                            ToastUtil.showShortToast(mContext, msg + "");
                         }
                     }
                 }
             }
         });
-    }
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.bt_back:
-                finish();
-                break;
-        }
     }
 }
