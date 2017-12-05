@@ -37,12 +37,10 @@ dependencies {
     annotationProcessor rootProject.ext.dependencies["dagger2-compiler"]
     implementation rootProject.ext.dependencies["progressmanager"]
     implementation rootProject.ext.dependencies["retrofit-url-manager"]
-
     //view
     annotationProcessor(rootProject.ext.dependencies["butterknife-compiler"]) {
         exclude module: 'support-annotations'
     }
-
     //commonlibrary
     implementation project(':commonlibrary')
     //test
@@ -50,4 +48,5 @@ dependencies {
     debugImplementation rootProject.ext.dependencies["canary-debug"]
     releaseImplementation rootProject.ext.dependencies["canary-release"]
     testImplementation rootProject.ext.dependencies["canary-release"]
+    implementation files('libs/pos.jar')
 }

@@ -75,9 +75,10 @@ public class UnBindActivity extends BaseActivity implements View.OnClickListener
         params.put(Contacts.Key.VID, vidCode.trim());//vid
         params.put(Contacts.Key.SIGN, certSign);//签名数据
         params.put(Contacts.Key.ENCRY, CommonUtil.byte2Hex(encryData_byte).trim());//加密数据
-        params.put(Contacts.Key.MT, Contacts.Const.DEVICEUNBIND + "");
+        params.put(Contacts.Key.MT, Contacts.Const.DEVICEBIND + "");
         params.put(Contacts.Key.ST, CommonUtil.getSystemTime().trim());
         params.put(Contacts.Key.TOKEN, token_data);
+        params.put(Contacts.Key.BIND,Contacts.Const.DEVUNBIND+"");
         String mapToJson = JsonUtil.parseMapToJson(params);
         Logger.json(mapToJson);
 

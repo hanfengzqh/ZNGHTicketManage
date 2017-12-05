@@ -80,6 +80,8 @@ public class BindActivity extends BaseActivity implements View.OnClickListener{
         params.put(Contacts.Key.ST,CommonUtil.getSystemTime().trim());
         params.put(Contacts.Key.TOKEN,token_data);
         params.put(Contacts.Key.LANGUAGE,CommonUtil.getCurrentLauguage());
+        params.put(Contacts.Key.BIND,Contacts.Const.DEVBIND+"");
+
         String mapToJson = JsonUtil.parseMapToJson(params);
         Logger.json(mapToJson);
 
