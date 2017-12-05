@@ -28,7 +28,15 @@
         <activity
             android:name=".view.BindActivity"
             android:theme="@style/Theme.Design.Light.NoActionBar"></activity>
-
+        <activity
+            android:name=".view.LoginActivity"
+            android:theme="@style/Theme.Design.Light.NoActionBar"></activity>
+        <activity
+            android:name=".view.UnBindActivity"
+            android:theme="@style/Theme.Design.Light.NoActionBar"></activity>
+        <activity
+            android:name=".view.ActivateQueryActivity"
+            android:theme="@style/Theme.Design.Light.NoActionBar"></activity>
     </application>
 
 </manifest>

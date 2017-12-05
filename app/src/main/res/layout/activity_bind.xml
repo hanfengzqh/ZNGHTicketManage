@@ -23,6 +23,7 @@
         android:layout_marginTop="10dp"
         android:digits="0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ"
         android:hint="纳税人识别号"
+        android:text="000000002025111111"
         android:maxLength="20"
         android:singleLine="true" />
 
