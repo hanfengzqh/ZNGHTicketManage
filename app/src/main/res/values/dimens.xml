@@ -2,5 +2,21 @@
 <resources>
 
     <dimen name="margn_width">10dp</dimen>
+    <dimen name="smallPadding">8.0dip</dimen>
+    <dimen name="middleMargin">28.0dip</dimen>
+    <dimen name="hugePadding">20.0dip</dimen>
+    <dimen name="common_item_small_height">35.0dip</dimen>
+    <dimen name="normal_text_size">14.0sp</dimen>
+    <dimen name="basicPadding">4.0dip</dimen>
+    <dimen name="biggest_text_size">18.0sp</dimen>
+    <dimen name="normalPadding">12.0dip</dimen>
+    <dimen name="big_text_size">16.0sp</dimen>
+    <dimen name="bigMargin">45.0dip</dimen>
+    <dimen name="middlePadding">10.0dip</dimen>
+    <dimen name="smaller_text_size">10.0sp</dimen>
+    <dimen name="basicMargin">4.0dip</dimen>
+    <dimen name="divider_width">1.0dip</dimen>
+    <dimen name="super_big_text_size">20.0sp</dimen>
+
 
 </resources>

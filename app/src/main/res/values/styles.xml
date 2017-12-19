@@ -9,4 +9,34 @@
     </style>
 
     <style name="AppTheme" parent="AppTheme.Base"></style>
+
+    <style name="OverflowMenuStyle" parent="@style/Widget.AppCompat.PopupMenu.Overflow">
+        <item name="android:textSize">@dimen/big_text_size</item>
+        <item name="android:textColor">@color/textblack</item>
+        <item name="android:paddingRight">5.0dip</item>
+        <item name="android:popupBackground">@color/textwhite</item>
+        <item name="android:dropDownWidth">wrap_content</item>
+        <item name="android:dropDownHorizontalOffset">0.0dip</item>
+        <item name="android:dropDownVerticalOffset">5.0dip</item>
+        <item name="overlapAnchor">false</item>
+    </style>
+
+    <style name="TextTab" parent="@style/TextBigWhite">
+        <item name="android:textSize">@dimen/big_text_size</item>
+        <item name="android:textColor">@color/textblack</item>
+        <item name="android:gravity">center</item>
+        <item name="android:background">@drawable/selector_top_tab_bg</item>
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">fill_parent</item>
+        <item name="android:lineSpacingExtra">2.0dip</item>
+    </style>
+
+    <style name="TextBigWhite">
+        <item name="android:textSize">@dimen/big_text_size</item>
+        <item name="android:textColor">@color/textwhite</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:lineSpacingExtra">2.0dip</item>
+    </style>
 </resources>

@@ -1,0 +1,476 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/window_bg_default"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+    <include layout="@layout/include_toolbar" />
+
+    <LinearLayout
+        android:id="@+id/ll1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/smallPadding"
+        android:background="@drawable/icon_bg_invoice"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/middleMargin">
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/hugePadding"
+            android:layout_marginTop="@dimen/smallPadding"
+            android:minHeight="@dimen/common_item_small_height"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:text="发票金额："
+                android:textColor="@color/textblack"
+                android:textSize="@dimen/normal_text_size" />
+
+            <TextView
+                android:id="@+id/tv_money"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:paddingLeft="@dimen/basicPadding"
+                android:text="¥0.00元"
+                android:textColor="@color/textblack"
+                android:textSize="@dimen/biggest_text_size" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/hugePadding"
+            android:minHeight="@dimen/common_item_small_height"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:text="发票内容："
+                android:textColor="@color/textblack"
+                android:textSize="@dimen/normal_text_size" />
+
+            <LinearLayout
+                android:id="@+id/ll_choice_consume"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_content"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:gravity="center_vertical"
+                    android:maxLines="1"
+                    android:paddingLeft="@dimen/basicPadding"
+                    android:paddingRight="@dimen/basicPadding"
+                    android:textColor="@color/textblack"
+                    android:textSize="@dimen/biggest_text_size" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginRight="@dimen/normalPadding"
+                    android:src="@mipmap/icon_choice_consume"
+                    android:visibility="gone" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+    <ScrollView
+        android:id="@+id/scroll_content"
+        android:layout_width="fill_parent"
+        android:layout_height="0.0dip"
+        android:layout_weight="1.0"
+        android:background="@color/white"
+        android:fitsSystemWindows="true">
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="0.0dip"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/ll2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/hugePadding"
+                android:background="@drawable/shape_bg_choice"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_company"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/shape_left_pressed"
+                    android:paddingBottom="@dimen/basicPadding"
+                    android:paddingLeft="@dimen/hugePadding"
+                    android:paddingRight="@dimen/hugePadding"
+                    android:paddingTop="@dimen/basicPadding"
+                    android:text="企业"
+                    android:textColor="@color/textorange"
+                    android:textSize="@dimen/big_text_size" />
+
+                <TextView
+                    android:id="@+id/tv_person"
+                    android:layout_width="wrap_content"
+                    android:layout_height="fill_parent"
+                    android:paddingBottom="@dimen/basicPadding"
+                    android:paddingLeft="@dimen/hugePadding"
+                    android:paddingRight="@dimen/hugePadding"
+                    android:paddingTop="@dimen/basicPadding"
+                    android:text="个人"
+                    android:textColor="@color/textgrey"
+                    android:textSize="@dimen/big_text_size" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll3"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/normalPadding"
+                android:background="@color/white"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:paddingLeft="@dimen/bigMargin"
+                android:paddingRight="@dimen/bigMargin">
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/hugePadding"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/middlePadding"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="fill_parent"
+                            android:gravity="center"
+                            android:text="*"
+                            android:textColor="@color/red" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="fill_parent"
+                            android:gravity="center"
+                            android:text="号为必填项"
+                            android:textColor="@color/text_handinvoice_grey"
+                            android:textSize="@dimen/smaller_text_size" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/middlePadding"
+                        android:layout_marginTop="@dimen/normalPadding"
+                        android:fitsSystemWindows="true"
+                        android:minHeight="@dimen/common_item_small_height"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="fill_parent"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginRight="@dimen/basicMargin"
+                            android:text="*"
+                            android:textColor="@color/red" />
+
+                        <EditText
+                            android:id="@+id/et_head"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginRight="@dimen/middlePadding"
+                            android:layout_weight="1.0"
+                            android:background="@drawable/shape_edittext_bg"
+                            android:hint="请输入发票抬头(个人/企业名称)"
+                            android:paddingBottom="@dimen/smallPadding"
+                            android:textColor="@color/textblack"
+                            android:textColorHint="@color/shape_edittext_normal"
+                            android:textSize="@dimen/big_text_size" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/middlePadding"
+                        android:minHeight="@dimen/common_item_small_height"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="fill_parent"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginRight="@dimen/basicMargin"
+                            android:text="*"
+                            android:textColor="@color/red" />
+
+                        <EditText
+                            android:id="@+id/et_phone"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginRight="@dimen/middlePadding"
+                            android:layout_weight="1.0"
+                            android:background="@drawable/shape_edittext_bg"
+                            android:hint="请输入您的手机号"
+                            android:inputType="phone"
+                            android:paddingBottom="@dimen/smallPadding"
+                            android:textColor="@color/textblack"
+                            android:textColorHint="@color/shape_edittext_normal"
+                            android:textSize="@dimen/big_text_size" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/ll_recognition_num"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/middlePadding"
+                        android:minHeight="@dimen/common_item_small_height"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/tv_recognition_num_flag"
+                            android:layout_width="wrap_content"
+                            android:layout_height="fill_parent"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginRight="@dimen/basicMargin"
+                            android:text="*"
+                            android:textColor="@color/red"
+                            android:visibility="visible" />
+
+                        <EditText
+                            android:id="@+id/et_recognition_num"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginRight="@dimen/middlePadding"
+                            android:layout_weight="1.0"
+                            android:background="@drawable/shape_edittext_bg"
+                            android:hint="请输入纳税人识别号"
+                            android:paddingBottom="@dimen/smallPadding"
+                            android:textColor="@color/textblack"
+                            android:textColorHint="@color/shape_edittext_normal"
+                            android:textSize="@dimen/big_text_size" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/ll_email"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/middlePadding"
+                        android:minHeight="@dimen/common_item_small_height"
+                        android:orientation="horizontal"
+                        android:visibility="gone">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="fill_parent"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginRight="@dimen/basicMargin"
+                            android:text="*"
+                            android:textColor="@color/red"
+                            android:visibility="invisible" />
+
+                        <EditText
+                            android:id="@+id/et_mail_address"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginRight="@dimen/middlePadding"
+                            android:layout_weight="1.0"
+                            android:background="@drawable/shape_edittext_bg"
+                            android:hint="请输入常用邮箱地址"
+                            android:inputType="textEmailAddress"
+                            android:paddingBottom="@dimen/smallPadding"
+                            android:textColor="@color/textblack"
+                            android:textColorHint="@color/shape_edittext_normal"
+                            android:textSize="@dimen/big_text_size" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_select_info"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/middlePadding"
+                        android:minHeight="@dimen/common_item_small_height"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="fill_parent"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginRight="@dimen/basicMargin"
+                            android:text="*"
+                            android:textColor="@color/red"
+                            android:visibility="invisible" />
+
+                        <EditText
+                            android:id="@+id/et_company_address"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginRight="@dimen/middlePadding"
+                            android:layout_weight="1.0"
+                            android:background="@drawable/shape_edittext_bg"
+                            android:hint="请输入单位地址"
+                            android:paddingBottom="@dimen/smallPadding"
+                            android:textColor="@color/textblack"
+                            android:textColorHint="@color/shape_edittext_normal"
+                            android:textSize="@dimen/big_text_size" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/middlePadding"
+                        android:minHeight="@dimen/common_item_small_height"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="fill_parent"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginRight="@dimen/basicMargin"
+                            android:text="*"
+                            android:textColor="@color/red"
+                            android:visibility="invisible" />
+
+                        <EditText
+                            android:id="@+id/et_company_phone"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginRight="@dimen/middlePadding"
+                            android:layout_weight="1.0"
+                            android:background="@drawable/shape_edittext_bg"
+                            android:hint="请输入单位电话"
+                            android:inputType="phone"
+                            android:paddingBottom="@dimen/smallPadding"
+                            android:textColor="@color/textblack"
+                            android:textColorHint="@color/shape_edittext_normal"
+                            android:textSize="@dimen/big_text_size" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/middlePadding"
+                        android:minHeight="@dimen/common_item_small_height"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="fill_parent"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginRight="@dimen/basicMargin"
+                            android:text="*"
+                            android:textColor="@color/red"
+                            android:visibility="invisible" />
+
+                        <EditText
+                            android:id="@+id/et_bank"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginRight="@dimen/middlePadding"
+                            android:layout_weight="1.0"
+                            android:background="@drawable/shape_edittext_bg"
+                            android:hint="请输入开户行"
+                            android:paddingBottom="@dimen/smallPadding"
+                            android:textColor="@color/textblack"
+                            android:textColorHint="@color/shape_edittext_normal"
+                            android:textSize="@dimen/big_text_size" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/middlePadding"
+                        android:minHeight="@dimen/common_item_small_height"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="fill_parent"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginRight="@dimen/basicMargin"
+                            android:text="*"
+                            android:textColor="@color/red"
+                            android:visibility="invisible" />
+
+                        <EditText
+                            android:id="@+id/et_bank_num"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginRight="@dimen/middlePadding"
+                            android:layout_weight="1.0"
+                            android:background="@drawable/shape_edittext_bg"
+                            android:hint="请输入开户行账号"
+                            android:inputType="number"
+                            android:paddingBottom="@dimen/smallPadding"
+                            android:textColor="@color/textblack"
+                            android:textColorHint="@color/shape_edittext_normal"
+                            android:textSize="@dimen/big_text_size" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/tv_expand"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/smallPadding"
+                    android:src="@mipmap/icon_pull_down" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+    <LinearLayout
+        android:id="@+id/ll_bottom"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/divider_width"
+        android:background="@color/textwhite"
+        android:gravity="center"
+        android:minHeight="60.0dip"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tv_submit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@drawable/selector_button_click"
+            android:gravity="center"
+            android:minHeight="@dimen/common_item_small_height"
+            android:paddingLeft="40.0dip"
+            android:paddingRight="40.0dip"
+            android:text="确认提交"
+            android:textColor="@color/textwhite"
+            android:textSize="@dimen/biggest_text_size" />
+    </LinearLayout>
+</LinearLayout>

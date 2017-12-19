@@ -3,6 +3,7 @@ package com.zng.ticket_manage.znghticketmanage.view;
 import android.content.Context;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -29,7 +30,7 @@ import okhttp3.Request;
  * Created by zqh on 2017/11/30.
  */
 
-public class ActivateQueryActivity extends BaseActivity {
+public class ActivateQueryActivity extends BaseActivity implements View.OnClickListener {
 
     @BindView(R.id.bt_back)
     Button bt_back;
@@ -48,6 +49,7 @@ public class ActivateQueryActivity extends BaseActivity {
     public void initData(Bundle savedInstanceState) {
         mContext = this;
         mPOSFunctionUtils = new POSFunctionUtils(this);
+        bt_back.setOnClickListener(this);
         bindDev();
 
     }
@@ -69,14 +71,14 @@ public class ActivateQueryActivity extends BaseActivity {
         byte[] encryData_byte = CertifyDataUtil.encryptData(transKey_byte, clear_data.getBytes());
 
         HashMap<String, String> params = new HashMap();
-        String token_data = SharePreUtil.getString(mContext,Contacts.Key.TOKEN,"");
+        String token_data = SharePreUtil.getString(mContext, Contacts.Key.TOKEN, "");
         params.put(Contacts.Key.DSN, dsnCode.trim());//sn
         params.put(Contacts.Key.VID, vidCode.trim());//vid
         params.put(Contacts.Key.SIGN, certSign);//签名数据
         params.put(Contacts.Key.ENCRY, CommonUtil.byte2Hex(encryData_byte).trim());//加密数据
-        params.put(Contacts.Key.MT,Contacts.Const.ACTIVATIONSEL+"");
-        params.put(Contacts.Key.ST,CommonUtil.getSystemTime().trim());
-        params.put(Contacts.Key.TOKEN,token_data);
+        params.put(Contacts.Key.MT, Contacts.Const.ACTIVATIONSEL + "");
+        params.put(Contacts.Key.ST, CommonUtil.getSystemTime().trim());
+        params.put(Contacts.Key.TOKEN, token_data);
         String mapToJson = JsonUtil.parseMapToJson(params);
         Logger.json(mapToJson);
 
@@ -89,22 +91,31 @@ public class ActivateQueryActivity extends BaseActivity {
             @Override
             public void requestSuccess(String result) {
                 Logger.d(result);
-                if (!TextUtils.isEmpty(result)){
+                if (!TextUtils.isEmpty(result)) {
                     ResultInfor infor = JsonUtil.parseJsonToBean(result, ResultInfor.class);
-                    if (infor != null){
+                    if (infor != null) {
                         boolean result1 = infor.isResult();
                         String msg = infor.getMsg();
-                        if (result1){
+                        if (result1) {
                             String msgEncry = infor.getEncry();
                             String sign = infor.getSign();
                             String bind_data = CertifyDataUtil.serverSignVerify(sign, msgEncry, mPOSFunctionUtils);
-                            Logger.d("bind_data = "+bind_data.trim());
-                        }else{
-                            ToastUtil.showShortToast(mContext,msg+"");
+                            Logger.d("bind_data = " + bind_data.trim());
+                        } else {
+                            ToastUtil.showShortToast(mContext, msg + "");
                         }
                     }
                 }
             }
         });
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.bt_back:
+                finish();
+                break;
+        }
     }
 }

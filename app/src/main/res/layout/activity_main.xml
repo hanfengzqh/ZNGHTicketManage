@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/holo_orange_light"
+    android:background="@color/window_bg_default"
     android:backgroundTintMode="screen"
+    android:fitsSystemWindows="true"
     android:orientation="vertical">
+
+    <include layout="@layout/include_toolbar"></include>
 
     <Button
         android:id="@+id/bt_login"
@@ -55,5 +56,8 @@
         android:layout_marginLeft="20dp"
         android:layout_marginTop="@dimen/margn_width"
         android:text="@string/bt_blue_ticket_bill" />
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
 </LinearLayout>
