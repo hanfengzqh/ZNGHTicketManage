@@ -5,14 +5,14 @@
         <shape>
             <solid android:color="@color/colorPrimary" />
             <corners android:radius="30.0dip" />
-            <gradient android:startColor="@color/colorAccent" android:endColor="@color/colorPrimary" android:angle="45.0" />
+            <gradient android:startColor="@color/x_colorPrimary" android:endColor="@color/x_colorPrimary" android:angle="45.0" />
         </shape>
     </item>
     <item>
         <shape>
             <solid android:color="@color/colorPrimaryDark" />
             <corners android:radius="30.0dip" />
-            <gradient android:startColor="@color/colorAccent" android:endColor="@color/colorPrimary" android:angle="45.0" />
+            <gradient android:startColor="@color/colorAccent" android:endColor="@color/colorAccent" android:angle="45.0" />
         </shape>
     </item>
 </selector>

@@ -28,6 +28,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     Button bt_blue_ticket_bill;//蓝票开票流程
     @BindView(R.id.toolbar)
     Toolbar toolbar;
+    @BindView(R.id.bt_qrCode)
+    Button bt_qrCode;
     @BindView(R.id.tv_order_title)
     TextView tv_order_title;
 
@@ -56,7 +58,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         activate_quire.setOnClickListener(this);
         bt_red_ticket_bill.setOnClickListener(this);
         bt_blue_ticket_bill.setOnClickListener(this);
-
+        bt_qrCode.setOnClickListener(this);
     }
 
 
@@ -80,6 +82,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 break;
             case R.id.bt_blue_ticket_bill://蓝票开票
                 startActivity(new Intent(this, BlueTicketActivity.class));
+                break;
+            case R.id.bt_qrCode:
+                startActivity(new Intent(this,QRActivity.class));
                 break;
             default:
                 break;

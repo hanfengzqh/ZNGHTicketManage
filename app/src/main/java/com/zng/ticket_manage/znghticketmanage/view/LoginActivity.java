@@ -2,6 +2,7 @@ package com.zng.ticket_manage.znghticketmanage.view;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -38,8 +39,9 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     EditText ed_password;
     @BindView(R.id.bt_login2)
     Button bt_login2;
-    @BindView(R.id.bt_back)
-    Button bt_back;
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
+
 
     private Context mContext;
     private POSFunctionUtils mPOSFunctionUtils;
@@ -54,8 +56,16 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         mContext = this;
         mPOSFunctionUtils = new POSFunctionUtils(this);
         bt_login2.setOnClickListener(this);
-        bt_back.setOnClickListener(this);
-
+        toolbar.setTitle("登陆");
+        toolbar.setSubtitle("登陆");
+        setSupportActionBar(toolbar);
+        toolbar.setNavigationIcon(R.drawable.title_back_btn_bg);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
     @Override
@@ -65,9 +75,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 Logger.d("ed_account = " + ed_account.getText().toString());
                 Logger.d("ed_password = " + ed_password.getText().toString());
                 login();
-                break;
-            case R.id.bt_back:
-                finish();
                 break;
             default:
                 break;

@@ -1,6 +1,7 @@
 package com.zng.ticket_manage.commonlibrary.base;
 
 import android.annotation.TargetApi;
+import android.content.Context;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -23,10 +24,12 @@ import butterknife.Unbinder;
 
 public abstract class BaseActivity extends AppCompatActivity implements IActivity {
     private Unbinder mUnbinder;
+    protected Context mContext;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mContext = this;
         try {
             int layoutResID = initView(savedInstanceState);
             //如果initView返回0,框架则不会调用setContentView(),当然也不会 Bind ButterKnife

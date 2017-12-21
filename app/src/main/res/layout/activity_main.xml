@@ -9,55 +9,79 @@
 
     <include layout="@layout/include_toolbar"></include>
 
-    <Button
-        android:id="@+id/bt_login"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="@dimen/margn_width"
-        android:text="@string/bt_login_text" />
-
-    <Button
-        android:id="@+id/bt_dev_bind"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="@dimen/margn_width"
-        android:text="@string/bt_dev_bind" />
-
-    <Button
-        android:id="@+id/bt_dev_unbind"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="@dimen/margn_width"
-        android:text="@string/bt_dev_unbind" />
-
-    <Button
-        android:id="@+id/bt_activate_quire"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="@dimen/margn_width"
-        android:text="@string/bt_activate_quire" />
-
-    <Button
-        android:id="@+id/bt_red_ticket_bill"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="@dimen/margn_width"
-        android:text="@string/bt_red_ticket_bill" />
-
-    <Button
-        android:id="@+id/bt_blue_ticket_bill"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="@dimen/margn_width"
-        android:text="@string/bt_blue_ticket_bill" />
-    <EditText
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="match_parent">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/bt_login"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="@dimen/margn_width"
+                android:text="@string/bt_login_text" />
+
+            <Button
+                android:id="@+id/bt_dev_bind"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="@dimen/margn_width"
+                android:text="@string/bt_dev_bind" />
+
+            <Button
+                android:id="@+id/bt_dev_unbind"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="@dimen/margn_width"
+                android:text="@string/bt_dev_unbind" />
+
+            <Button
+                android:id="@+id/bt_activate_quire"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="@dimen/margn_width"
+                android:text="@string/bt_activate_quire" />
+
+            <Button
+                android:id="@+id/bt_red_ticket_bill"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="@dimen/margn_width"
+                android:text="@string/bt_red_ticket_bill" />
+
+            <Button
+                android:id="@+id/bt_blue_ticket_bill"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="@dimen/margn_width"
+                android:text="@string/bt_blue_ticket_bill" />
+
+            <Button
+                android:id="@+id/bt_qrCode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="@dimen/margn_width"
+                android:text="@string/bt_qrCode_text" />
+
+            <Button
+                android:id="@+id/bt_tax_query"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="@dimen/margn_width"
+                android:text="@string/bt_tax_query_text" />
+
+        </LinearLayout>
+    </ScrollView>
 </LinearLayout>

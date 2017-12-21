@@ -17,6 +17,13 @@
     <dimen name="basicMargin">4.0dip</dimen>
     <dimen name="divider_width">1.0dip</dimen>
     <dimen name="super_big_text_size">20.0sp</dimen>
+    <dimen name="common_btn_height">35.0dip</dimen>
+    <dimen name="smallMargin">16.0dip</dimen>
+    <dimen name="qrcode_width">180.0dip</dimen>
+
+
+
+
 
 
 </resources>

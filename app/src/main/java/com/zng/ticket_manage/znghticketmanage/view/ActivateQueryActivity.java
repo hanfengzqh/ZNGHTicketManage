@@ -2,9 +2,9 @@ package com.zng.ticket_manage.znghticketmanage.view;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 
 import com.orhanobut.logger.Logger;
@@ -32,11 +32,11 @@ import okhttp3.Request;
 
 public class ActivateQueryActivity extends BaseActivity implements View.OnClickListener {
 
-    @BindView(R.id.bt_back)
-    Button bt_back;
+
     @BindView(R.id.ed_tax_person)
     EditText ed_tax_person;
-
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
     private Context mContext;
     private POSFunctionUtils mPOSFunctionUtils;
 
@@ -49,7 +49,16 @@ public class ActivateQueryActivity extends BaseActivity implements View.OnClickL
     public void initData(Bundle savedInstanceState) {
         mContext = this;
         mPOSFunctionUtils = new POSFunctionUtils(this);
-        bt_back.setOnClickListener(this);
+        toolbar.setTitle("激活查询");
+        toolbar.setSubtitle("激活查询");
+        setSupportActionBar(toolbar);
+        toolbar.setNavigationIcon(R.drawable.title_back_btn_bg);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         bindDev();
 
     }
@@ -112,10 +121,5 @@ public class ActivateQueryActivity extends BaseActivity implements View.OnClickL
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.bt_back:
-                finish();
-                break;
-        }
     }
 }

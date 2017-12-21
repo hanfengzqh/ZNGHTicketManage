@@ -85,6 +85,13 @@
                     android:visibility="gone" />
             </LinearLayout>
         </LinearLayout>
+
+        <ImageView
+            android:id="@+id/image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+             />
     </LinearLayout>
 
     <ScrollView

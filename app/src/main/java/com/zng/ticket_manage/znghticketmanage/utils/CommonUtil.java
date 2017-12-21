@@ -7,6 +7,7 @@ import android.text.TextUtils;
 import com.orhanobut.logger.Logger;
 import com.zng.common.POSFunctionUtils;
 import com.zng.common.utils.Utils;
+import com.zng.ticket_manage.commonlibrary.utils.HexUtils;
 
 import java.util.Date;
 import java.util.Locale;
@@ -171,6 +172,7 @@ public class CommonUtil {
         }
         return account_num;
     }
+
     /**
      * 获取设备SN
      *
@@ -192,7 +194,7 @@ public class CommonUtil {
 
             serial = serial.concat(sb.toString());
         }
-        Logger.d("serial = "+serial);
+        Logger.d("serial = " + serial);
         return serial;
     }
 
@@ -232,7 +234,7 @@ public class CommonUtil {
         String valueOf = String.valueOf(System.currentTimeMillis());
         StringBuilder sb = new StringBuilder();
 
-        if (valueOf.length() <16) {
+        if (valueOf.length() < 16) {
             int length = 16 - valueOf.length();
             for (int i = 0; i < length; i++) {
                 sb.append(" ");
@@ -252,11 +254,36 @@ public class CommonUtil {
         return returnStr.toUpperCase();
     }
 
-    /**获取语言信息*/
-    public static String getCurrentLauguage(){
+    /**
+     * 获取语言信息
+     */
+    public static String getCurrentLauguage() {
         //获取系统当前使用的语言
         String mCurrentLanguage = Locale.getDefault().getLanguage();
         //设置成简体中文的时候，getLanguage()返回的是zh
         return mCurrentLanguage;
+    }
+
+    /**
+     * 获取购买方名称
+     * @param invoiceHeard
+     * @return
+     */
+    public static String getInvoiceHeard(String invoiceHeard) {
+        StringBuilder sb = new StringBuilder();
+        if (TextUtils.isEmpty(invoiceHeard)) {
+            invoiceHeard = "";
+        }
+
+        if (invoiceHeard.length() < 200) {
+            int length = 200 - invoiceHeard.length();
+            for (int i = 0; i < length; i++) {
+                sb.append(" ");
+            }
+        }
+        invoiceHeard = invoiceHeard.concat(sb.toString());
+        invoiceHeard = HexUtils.str2HexStr(invoiceHeard);
+
+        return invoiceHeard;
     }
 }

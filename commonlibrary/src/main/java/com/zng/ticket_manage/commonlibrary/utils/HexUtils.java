@@ -1,5 +1,6 @@
 package com.zng.ticket_manage.commonlibrary.utils;
 
+import android.text.TextUtils;
 import android.util.Log;
 
 import java.util.Locale;
@@ -22,7 +23,8 @@ public class HexUtils {
             sb.append(chars[bit]);
             bit = bs[i] & 0x0f;
             sb.append(chars[bit]);
-            sb.append(' ');
+//            sb.append(' ');
+            sb.append("");
         }
         return sb.toString().trim();
     }
@@ -92,11 +94,13 @@ public class HexUtils {
      * @return String 每个unicode之间无分隔符
      * @throws Exception
      */
-    public static String strToUnicode(String strText) throws Exception {
+    public static String strToUnicode(String strText) {
         char c;
         StringBuilder str = new StringBuilder();
         int intAsc;
         String strHex;
+        if (TextUtils.isEmpty(strText))
+            return null;
         for (int i = 0; i < strText.length(); i++) {
             c = strText.charAt(i);
             intAsc = (int) c;
@@ -107,6 +111,31 @@ public class HexUtils {
                 str.append("\\u00" + strHex); // 低位在前面补00
         }
         return str.toString();
+    }
+
+    /**
+     * unicode的String转换成String的字符串
+     *
+     * @param dataStr
+     * @return
+     */
+    public static String decodeUnicode(final String dataStr) {
+        int start = 0;
+        int end = 0;
+        final StringBuffer buffer = new StringBuffer();
+        while (start > -1) {
+            end = dataStr.indexOf("\\u", start + 2);
+            String charStr = "";
+            if (end == -1) {
+                charStr = dataStr.substring(start + 2, dataStr.length());
+            } else {
+                charStr = dataStr.substring(start + 2, end);
+            }
+            char letter = (char) Integer.parseInt(charStr, 16); // 16进制parse整形字符串。
+            buffer.append(new Character(letter).toString());
+            start = end;
+        }
+        return buffer.toString();
     }
 
     /**

@@ -76,7 +76,8 @@ ext {
             "progressmanager"         : "me.jessyan:progressmanager:1.5.0",
             "retrofit-url-manager"    : "me.jessyan:retrofit-url-manager:1.1.0",
             "eventbus"                : "de.greenrobot:eventbus:3.0.0-beta1",
-
+            //"jackson"                 : "com.fasterxml.jackson.core:jackson-core:2.9.3",
+            "jackson-databind":"com.fasterxml.jackson.core:jackson-databind:2.9.3",
             //test
             "junit"                   : "junit:junit:4.12",
             "androidJUnitRunner"      : "android.support.test.runner.AndroidJUnitRunner",
