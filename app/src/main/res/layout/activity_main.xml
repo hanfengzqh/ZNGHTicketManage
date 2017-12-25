@@ -73,15 +73,6 @@
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="@dimen/margn_width"
                 android:text="@string/bt_qrCode_text" />
-
-            <Button
-                android:id="@+id/bt_tax_query"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="@dimen/margn_width"
-                android:text="@string/bt_tax_query_text" />
-
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

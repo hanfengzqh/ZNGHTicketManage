@@ -162,11 +162,11 @@ public class RedTicketActivity extends BaseActivity implements View.OnClickListe
         byte[] transKey_byte = CertifyDataUtil.getTransKey();
 
         EncryBean encryBean = new EncryBean();
-        encryBean.setInvoiceReqSerialNo("ZNGT1000000000000264");
+        encryBean.setInvoiceReqSerialNo("ZNGT1000000000000268");
         encryBean.setTaxpayerNum("110101201702071");
         encryBean.setInvoiceCode("150003533340");
         encryBean.setInvoiceNo("46258805");
-        encryBean.setRedReason("是");
+        encryBean.setRedReason("是了");
         encryBean.setAmount("-146.38");
 
         String encryData = JsonUtil.parseBeanToJson(encryBean);

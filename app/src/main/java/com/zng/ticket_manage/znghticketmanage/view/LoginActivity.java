@@ -104,7 +104,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         params.put(Contacts.Key.VID, vidCode.trim());//vid
         params.put(Contacts.Key.SIGN, certSign.trim());//签名数据
         params.put(Contacts.Key.ENCRY, CommonUtil.byte2Hex(encryData_byte).trim());//加密数据
-        params.put(Contacts.Key.MT, Contacts.Const.LOGIN + "");
+        params.put(Contacts.Key.MT, Contacts.Const.DEV_BIND_UNBIND + "");
         params.put(Contacts.Key.ST, CommonUtil.getSystemTime().trim());
         params.put(Contacts.Key.LANGUAGE, CommonUtil.getCurrentLauguage());
         String mapToJson = JsonUtil.parseMapToJson(params);

@@ -164,7 +164,7 @@ public class BlueTicketActivity extends BaseActivity implements View.OnClickList
         String certSign = CertifyDataUtil.getCertSign(mContext, mPOSFunctionUtils);
         byte[] transKey_byte = CertifyDataUtil.getTransKey();
 
-        String taxCode = "12345678901234567890";
+        String taxCode = "12345678911234567890";
         String invoiceHeard = "北京信息科技大学";
         String buyerAddress = "北京市海淀区中关村大街1号海龙大厦10层1026";
         String name = "";
@@ -222,7 +222,7 @@ public class BlueTicketActivity extends BaseActivity implements View.OnClickList
             list.add(item);
         }
         encryBean.setItemList(list);
-        encryBean.setInvoiceReqSerialNo("ZNGT1000000000000275");
+        encryBean.setInvoiceReqSerialNo("ZNGT1000000001000267");
 
         String encryData = JsonUtil.parseBeanToJson(encryBean);
         Logger.json(encryData);
@@ -236,7 +236,7 @@ public class BlueTicketActivity extends BaseActivity implements View.OnClickList
         params.put(Contacts.Key.TOKEN, token_data);
         params.put(Contacts.Key.VID, vidCode.trim());
         params.put(Contacts.Key.DSN, dsnCode.trim());
-        params.put(Contacts.Key.MT, Contacts.Const.ACTIVATIONSEL + "");
+        params.put(Contacts.Key.MT, Contacts.Const.BLUETICKET + "");
         params.put(Contacts.Key.LANGUAGE, CommonUtil.getCurrentLauguage());
         params.put(Contacts.Key.ENCRY, CommonUtil.byte2Hex(encryData_byte).trim());//加密数据
 

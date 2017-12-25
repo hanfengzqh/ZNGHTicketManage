@@ -21,12 +21,10 @@ android {
 }
 
 dependencies {
-
     //support
     api(rootProject.ext.dependencies["support-v4"]) {
         exclude module: 'support-annotations'
     }
-
     api(rootProject.ext.dependencies["appcompat-v7"]) {
         exclude module: 'support-annotations'
         exclude module: 'support-v4'
@@ -38,7 +36,6 @@ dependencies {
     }
     api rootProject.ext.dependencies["annotations"]
     api 'com.android.support:multidex:1.0.0'
-
     //view
     api(rootProject.ext.dependencies["autolayout"]) {
         exclude group: 'com.android.support'
@@ -46,13 +43,11 @@ dependencies {
     api(rootProject.ext.dependencies["butterknife"]) {
         exclude module: 'support-annotations'
     }
-
     //rx
     api rootProject.ext.dependencies["rxjava2"]
     api(rootProject.ext.dependencies["rxandroid2"]) {
         exclude module: 'rxjava'
     }
-
     api(rootProject.ext.dependencies["rxlifecycle2"]) {
         exclude module: 'rxjava'
         exclude module: 'jsr305'
@@ -68,7 +63,6 @@ dependencies {
         exclude module: 'support-annotations'
     }
     api rootProject.ext.dependencies['rxerrorhandler2']
-
     //network
     api(rootProject.ext.dependencies["retrofit"]) {
         exclude module: 'okhttp'
@@ -93,7 +87,6 @@ dependencies {
     annotationProcessor(rootProject.ext.dependencies["glide-compiler"]) {
         exclude module: 'jsr305'
     }
-
     //Tools
     compileOnly rootProject.ext.dependencies["javax.annotation"]
     api rootProject.ext.dependencies["dagger2"]
@@ -102,7 +95,6 @@ dependencies {
     api rootProject.ext.dependencies["fastjson"]
     api rootProject.ext.dependencies["eventbus"]
     api rootProject.ext.dependencies["jackson-databind"]
-
     //test
     api rootProject.ext.dependencies["timber"]
     api rootProject.ext.dependencies["logger"]
