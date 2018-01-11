@@ -1,4 +1,4 @@
-package com.zng.ticket_manage.commonlibrary;
+package com.zqh.mvpdagger;
 
 import org.junit.Test;
 
