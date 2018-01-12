@@ -1,1 +1,1 @@
-include ':app', ':commonlibrary'
+include ':app', ':commonlibrary', ':mvp_dagger2_demo'

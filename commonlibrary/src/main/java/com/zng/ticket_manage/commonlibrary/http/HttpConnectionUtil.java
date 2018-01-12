@@ -1,4 +1,4 @@
-package com.zng.ticket_manage.commonlibrary.httputil;
+package com.zng.ticket_manage.commonlibrary.http;
 
 
 import android.util.Log;
