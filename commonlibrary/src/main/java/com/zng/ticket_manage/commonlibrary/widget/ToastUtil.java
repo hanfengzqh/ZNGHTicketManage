@@ -1,4 +1,4 @@
-package com.zng.ticket_manage.commonlibrary.dialogutil;
+package com.zng.ticket_manage.commonlibrary.widget;
 
 import android.content.Context;
 import android.view.Gravity;

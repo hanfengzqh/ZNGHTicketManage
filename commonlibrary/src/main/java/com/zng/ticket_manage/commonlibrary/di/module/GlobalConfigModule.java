@@ -11,7 +11,7 @@ import com.zng.ticket_manage.commonlibrary.http.GlobalHttpHandler;
 import com.zng.ticket_manage.commonlibrary.http.RequestInterceptor;
 import com.zng.ticket_manage.commonlibrary.http.imageloader.BaseImageLoaderStrategy;
 import com.zng.ticket_manage.commonlibrary.http.imageloader.glide.GlideImageLoaderStrategy;
-import com.zng.ticket_manage.commonlibrary.integration.LruCache;
+import com.zng.ticket_manage.commonlibrary.integration.cache.LruCache;
 import com.zng.ticket_manage.commonlibrary.integration.cache.Cache;
 import com.zng.ticket_manage.commonlibrary.integration.cache.CacheType;
 import com.zng.ticket_manage.commonlibrary.utils.DataHelper;

@@ -2,10 +2,12 @@ package com.zng.ticket_manage.commonlibrary.di.module;
 
 import android.app.Application;
 import android.content.Context;
+import android.support.annotation.Nullable;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.zng.ticket_manage.commonlibrary.integration.IRepositoryManager;
+import com.zng.ticket_manage.commonlibrary.integration.RepositoryManager;
 import com.zng.ticket_manage.commonlibrary.integration.cache.Cache;
 import com.zng.ticket_manage.commonlibrary.integration.cache.CacheType;
 
@@ -34,7 +36,7 @@ public class AppModule {
 
     @Singleton
     @Provides
-    public Gson providerGson(Application application, GsonConfiguration configuration) {
+    public Gson providerGson(Application application, @Nullable GsonConfiguration configuration) {
         GsonBuilder builder = new GsonBuilder();
         if (configuration != null) {
             configuration.configGson(application, builder);
@@ -44,7 +46,7 @@ public class AppModule {
 
     @Singleton
     @Provides
-    public IRepositoryManager provideRepositoryManager(IRepositoryManager repositoryManager) {
+    public IRepositoryManager provideRepositoryManager(RepositoryManager repositoryManager) {
         return repositoryManager;
     }
 

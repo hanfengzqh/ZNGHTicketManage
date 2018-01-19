@@ -7,7 +7,7 @@ package com.zng.ticket_manage.commonlibrary.mvp;
 
 public interface IModel {
     /**
-     * 在框架中 {BasePresenter#onDestroy()} 时会默认调用 { IModel#onDestroy()}
+     * 在框架中 {@link BasePresenter#onDestroy()} 时会默认调用 {@link IModel#onDestroy()}
      */
-    void onDestory();
+    void onDestroy();
 }

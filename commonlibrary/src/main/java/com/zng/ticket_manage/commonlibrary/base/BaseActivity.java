@@ -1,30 +1,74 @@
 package com.zng.ticket_manage.commonlibrary.base;
 
 import android.annotation.TargetApi;
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.AttributeSet;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
+import com.trello.rxlifecycle2.android.ActivityEvent;
 import com.zng.ticket_manage.commonlibrary.R;
 import com.zng.ticket_manage.commonlibrary.base.delegate.IActivity;
+import com.zng.ticket_manage.commonlibrary.integration.cache.Cache;
+import com.zng.ticket_manage.commonlibrary.integration.cache.CacheType;
+import com.zng.ticket_manage.commonlibrary.integration.lifecycle.ActivityLifecycleable;
 import com.zng.ticket_manage.commonlibrary.manager.SystemBarTintManager;
+import com.zng.ticket_manage.commonlibrary.mvp.IPresenter;
+import com.zng.ticket_manage.commonlibrary.utils.ArmsUtils;
+
+import javax.inject.Inject;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import io.reactivex.subjects.BehaviorSubject;
+import io.reactivex.subjects.Subject;
+
+import static com.zng.ticket_manage.commonlibrary.utils.ThirdViewUtil.convertAutoView;
 
 /**
+ * 因为 Java 只能单继承,所以如果要用到需要继承特定 {@link Activity} 的三方库,那你就需要自己自定义 {@link Activity}
+ * 继承于这个特定的 {@link Activity},然后再按照 {@link BaseActivity} 的格式,将代码复制过去,记住一定要实现{@link IActivity}
+ * <p>
  * Created by zqh on 2017/11/29.
  */
 
-public abstract class BaseActivity extends AppCompatActivity implements IActivity {
+public abstract class BaseActivity<P extends IPresenter> extends AppCompatActivity implements IActivity, ActivityLifecycleable {
     private Unbinder mUnbinder;
     protected Context mContext;
+    private final BehaviorSubject<ActivityEvent> mLifecycleSubject = BehaviorSubject.create();
+    private Cache<String, Object> mCache;
+    @Inject
+    protected P mPresenter;
+
+    @NonNull
+    @Override
+    public synchronized Cache<String, Object> provideCache() {
+        if (mCache == null) {
+            mCache = ArmsUtils.obtainAppComponentFromContext(this).cacheFactory().build(CacheType.ACTIVITY_CACHE);
+        }
+        return mCache;
+    }
+
+    @NonNull
+    @Override
+    public final Subject<ActivityEvent> provideLifecycleSubject() {
+        return mLifecycleSubject;
+    }
+
+    @Override
+    public View onCreateView(String name, Context context, AttributeSet attrs) {
+        View view = convertAutoView(name, context, attrs);
+        return view == null ? super.onCreateView(name, context, attrs) : view;
+    }
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -51,9 +95,9 @@ public abstract class BaseActivity extends AppCompatActivity implements IActivit
         if (mUnbinder != null && mUnbinder != Unbinder.EMPTY)
             mUnbinder.unbind();
         this.mUnbinder = null;
-//        if (mPresenter != null)
-//            mPresenter.onDestroy();//释放资源
-//        this.mPresenter = null;
+        if (mPresenter != null)
+            mPresenter.onDestroy();//释放资源
+        this.mPresenter = null;
     }
 
     /**
@@ -105,7 +149,6 @@ public abstract class BaseActivity extends AppCompatActivity implements IActivit
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
             window.addFlags(Integer.MIN_VALUE);
             window.setStatusBarColor(Color.TRANSPARENT);
-
         }
     }
 

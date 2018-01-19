@@ -13,13 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.zng.ticket_manage.commonlibrary.integration;
+package com.zng.ticket_manage.commonlibrary.integration.cache;
 
 import android.app.Application;
 import android.support.annotation.Nullable;
 
 import com.zng.ticket_manage.commonlibrary.di.module.GlobalConfigModule;
-import com.zng.ticket_manage.commonlibrary.integration.cache.Cache;
 
 import java.util.LinkedHashMap;
 import java.util.Map;

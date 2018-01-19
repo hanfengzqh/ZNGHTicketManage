@@ -44,11 +44,6 @@ import timber.log.Timber;
  * 用于管理所有 {@link Activity},和在前台的 {@link Activity}
  * 可以通过直接持有 {@link AppManager} 对象执行对应方法
  * 也可以通过 {@link #post(Message)} ,远程遥控执行对应方法,用法和 EventBus 类似
- *
- * @see <a href="https://github.com/JessYanCoding/MVPArms/wiki#3.11">AppManager wiki 官方文档</a>
- * Created by JessYan on 14/12/2016 13:50
- * <a href="mailto:jess.yan.effort@gmail.com">Contact me</a>
- * <a href="https://github.com/JessYanCoding">Follow me</a>
  * ================================================
  */
 @Singleton
@@ -62,7 +57,8 @@ public final class AppManager {
     public static final int KILL_ALL = 5002;
     public static final int APP_EXIT = 5003;
     private Application mApplication;
-    //管理所有存活的 Activity, 容器中的顺序仅仅是 Activity 的创建顺序, 并不能保证和 Activity 任务栈顺序一致
+    //管理所有存活的 Activity, 容器中的顺序仅仅是 Activity 的创建顺序,
+    // 并不能保证和 Activity 任务栈顺序一致
     public List<Activity> mActivityList;
     //当前在前台的 Activity
     private Activity mCurrentActivity;
