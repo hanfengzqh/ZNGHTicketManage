@@ -1,0 +1,106 @@
+apply plugin: 'com.android.application'
+
+def releaseTime() {
+    return new Date().format("yyyy-MM-dd", TimeZone.getTimeZone("UTC"))
+}
+
+android {
+    compileSdkVersion 26
+    defaultConfig {
+        applicationId "com.zng.ticket_manage.myapplication"
+        minSdkVersion rootProject.ext.android.minSdkVersion//支持的最低版本
+        targetSdkVersion rootProject.ext.android.targetSdkVersion//支持的目标版本
+        versionCode rootProject.ext.android.versionCode//版本号
+        versionName rootProject.ext.android.versionName//版本名
+        // dex突破65535的限制
+        multiDexEnabled true
+        manifestPlaceholders = [ MY_CHANNEL:"xiaomi" ]
+        flavorDimensions "versionCode"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+    }
+
+    signingConfigs {
+        release {
+            storeFile file("2.jks");
+            storePassword "123456"
+            keyAlias "test"
+            keyPassword "123456"
+        }
+    }
+
+    //编译的 lint 开关，程序在buid的时候，会执行lint检查，
+    // 有任何的错误或者警告提示，都会终止构建，我们可以将其关掉。
+    lintOptions {
+        checkReleaseBuilds false
+        abortOnError false
+    }
+
+    //**使用的批量打包**
+    productFlavors {
+        xiaomi {}
+        _360 {}
+        baidu {}
+        wandoujia {}
+    }
+    productFlavors.all {
+        flavor -> flavor.manifestPlaceholders = [MY_CHANNEL: name]
+    }
+
+    buildTypes {
+        release {
+            buildConfigField "boolean", "LOG_DEBUG", "true"
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            //是否清理无用资源
+//            shrinkResources true
+            //是否启用zipAlign压缩
+            zipAlignEnabled true
+            signingConfig signingConfigs.release
+
+            android.applicationVariants.all { variant ->
+                variant.outputs.all {
+                    outputFileName = "ticketmanager_${defaultConfig.versionName}_${releaseTime()}_${variant.productFlavors[0].name}.apk"
+                }
+            }
+
+            debug {
+                //显示log
+                buildConfigField "boolean", "LOG_DEBUG", "true"
+                minifyEnabled false
+                proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+                //是否清理无用资源
+//            shrinkResources false
+                //是否启用zipAlign压缩
+                zipAlignEnabled true
+                signingConfig signingConfigs.release
+            }
+        }
+    }
+
+
+    dependencies {
+        implementation fileTree(include: ['*.jar'], dir: 'libs')
+        //support
+        implementation(rootProject.ext.dependencies["cardview-v7"]) {
+            exclude module: 'support-annotations'
+        }
+        implementation 'com.android.support:multidex:1.0.0'
+        //tools
+        annotationProcessor rootProject.ext.dependencies["dagger2-compiler"]
+        implementation rootProject.ext.dependencies["progressmanager"]
+        implementation rootProject.ext.dependencies["retrofit-url-manager"]
+        //view
+        annotationProcessor(rootProject.ext.dependencies["butterknife-compiler"]) {
+            exclude module: 'support-annotations'
+        }
+        //commonlibrary
+        implementation project(':commonlibrary')
+        //test
+        testImplementation rootProject.ext.dependencies["junit"]
+        debugImplementation rootProject.ext.dependencies["canary-debug"]
+        releaseImplementation rootProject.ext.dependencies["canary-release"]
+        testImplementation rootProject.ext.dependencies["canary-release"]
+        implementation 'com.alipay.euler:andfix:0.5.0@aar'//引入AndFix热修复模块
+    }
+}
