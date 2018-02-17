@@ -1,0 +1,100 @@
+apply plugin: 'com.android.application'
+
+def releaseTime() {
+    return new Date().format("yyyy-MM-dd", TimeZone.getTimeZone("UTC"))
+}
+android {
+    compileSdkVersion 26
+    defaultConfig {
+        applicationId "com.zng.tinkerdemo"
+        minSdkVersion rootProject.ext.android.minSdkVersion//支持的最低版本
+        targetSdkVersion rootProject.ext.android.targetSdkVersion//支持的目标版本
+        versionCode rootProject.ext.android.versionCode//版本号
+        versionName rootProject.ext.android.versionName//版本名
+        // dex突破65535的限制
+        multiDexEnabled true
+        manifestPlaceholders = [ MY_CHANNEL:"xiaomi" ]
+        flavorDimensions "versionCode"
+        buildConfigField "boolean", "LOG_DEBUG", "true"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        javaCompileOptions {
+            annotationProcessorOptions {
+                includeCompileClasspath true
+            }
+        }
+    }
+
+    //编译的 lint 开关，程序在buid的时候，会执行lint检查，
+    // 有任何的错误或者警告提示，都会终止构建，我们可以将其关掉。
+    lintOptions {
+        checkReleaseBuilds false
+        abortOnError false
+    }
+
+    signingConfigs {
+        release {
+            try {
+                storeFile file("tinker.jks")
+                storePassword "123456"
+                keyAlias "tinker"
+                keyPassword "123456"
+            } catch (ex) {
+                throw new InvalidUserDataException(ex.toString())
+            }
+        }
+    }
+
+    //**使用的批量打包**
+    productFlavors {
+        xiaomi {}
+        _360 {}
+        baidu {}
+        wandoujia {}
+    }
+    productFlavors.all {
+        flavor -> flavor.manifestPlaceholders = [MY_CHANNEL: name]
+    }
+
+    buildTypes {
+        release {
+            buildConfigField "boolean", "LOG_DEBUG", "true"
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            zipAlignEnabled true
+            signingConfig signingConfigs.release
+
+            android.applicationVariants.all { variant ->
+                variant.outputs.all {
+                    outputFileName = "ticketmanager_${defaultConfig.versionName}_${releaseTime()}_${variant.productFlavors[0].name}.apk"
+                }
+            }
+        }
+    }
+
+}
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    //support
+    implementation(rootProject.ext.dependencies["cardview-v7"]) {
+        exclude module: 'support-annotations'
+    }
+    implementation 'com.android.support:multidex:1.0.0'
+    //view
+    annotationProcessor(rootProject.ext.dependencies["butterknife-compiler"]) {
+        exclude module: 'support-annotations'
+    }
+    //commonlibrary
+    implementation project(':commonlibrary')
+    //test
+    testImplementation rootProject.ext.dependencies["junit"]
+    debugImplementation rootProject.ext.dependencies["canary-debug"]
+    releaseImplementation rootProject.ext.dependencies["canary-release"]
+    testImplementation rootProject.ext.dependencies["canary-release"]
+
+    //tinker的核心sdk库 编译打包同时参与
+    compile('com.tencent.tinker:tinker-android-lib:1.7.7')
+    //生成appilcation时使用 provided 只参与编译不参与打包
+    provided('com.tencent.tinker:tinker-android-anno:1.7.7')
+
+}

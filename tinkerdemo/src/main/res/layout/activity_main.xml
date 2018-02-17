@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.view.menu.ListMenuItemView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="match_parent">
+
+    <Button
+        android:id="@+id/load_patch_view"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:gravity="center"
+        android:onClick="loadPatch"
+        android:text="加载patch包"
+        android:textColor="@android:color/black"
+        android:textSize="23sp" />
+
+    <Button
+        android:id="@+id/test_view"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@id/load_patch_view"
+        android:gravity="center"
+        android:text="过年了新功能"
+        android:textColor="@android:color/black"
+        android:textSize="23sp" />
+
+</android.support.v7.view.menu.ListMenuItemView>
