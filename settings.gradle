@@ -1,1 +1,2 @@
-include ':app', ':commonlibrary', ':mvp_dagger2_demo'
+//include ':app', ':commonlibrary', ':mvp_dagger2_demo', ':myapplication', ':tinkerdemo', ':tinkergradle'
+include ':commonlibrary', ':tinkergradle'

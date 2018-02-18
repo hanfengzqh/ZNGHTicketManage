@@ -1,0 +1,282 @@
+apply plugin: 'com.android.application'
+
+def bakPath = file("${buildDir}/bakApk/") //指定基准文件存放位置
+android {
+    compileSdkVersion 26
+    defaultConfig {
+        applicationId "com.zng.tinkergradle"
+        minSdkVersion rootProject.ext.android.minSdkVersion//支持的最低版本
+        targetSdkVersion rootProject.ext.android.targetSdkVersion//支持的目标版本
+        versionCode rootProject.ext.android.versionCode//版本号
+        versionName rootProject.ext.android.versionName//版本名
+        // dex突破65535的限制
+        multiDexEnabled true
+        flavorDimensions "versionCode"
+        buildConfigField "boolean", "LOG_DEBUG", "true"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        javaCompileOptions {
+            annotationProcessorOptions {
+                includeCompileClasspath true
+            }
+        }
+    }
+
+    //编译的 lint 开关，程序在buid的时候，会执行lint检查，
+    // 有任何的错误或者警告提示，都会终止构建，我们可以将其关掉。
+    lintOptions {
+        checkReleaseBuilds false
+        abortOnError false
+    }
+
+    signingConfigs {
+        release {
+            try {
+                storeFile file("tinker.jks")
+                storePassword "123456"
+                keyAlias "tinker"
+                keyPassword "123456"
+            } catch (ex) {
+                throw new InvalidUserDataException(ex.toString())
+            }
+        }
+    }
+
+    productFlavors {//多渠道脚本支持
+
+        xiaomi {
+            manifestPlaceholders = [MY_CHANNEL: "xiaomi"]
+            buildConfigField "String", "AUTO_TYPE", "\"1\""
+        }
+        baidu {
+            manifestPlaceholders = [MY_CHANNEL: "baidu"]
+            buildConfigField "String", "AUTO_TYPE", "\"2\""
+        }
+        _360 {
+            manifestPlaceholders = [MY_CHANNEL: "_360"]
+            buildConfigField "String", "AUTO_TYPE", "\"3\""
+        }
+
+        productFlavors.all {
+            flavor -> flavor.manifestPlaceholders = [MY_CHANNEL: name]
+        }
+    }
+
+
+    buildTypes {
+        release {
+            buildConfigField "boolean", "LOG_DEBUG", "true"
+            minifyEnabled true
+            signingConfig signingConfigs.release
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    //support
+    implementation(rootProject.ext.dependencies["cardview-v7"]) {
+        exclude module: 'support-annotations'
+    }
+    implementation 'com.android.support:multidex:1.0.2'
+    //view
+    annotationProcessor(rootProject.ext.dependencies["butterknife-compiler"]) {
+        exclude module: 'support-annotations'
+    }
+    //commonlibrary
+//    implementation project(':commonlibrary')
+
+    implementation("com.tencent.tinker:tinker-android-lib:${TINKER_VERSION}")
+    compileOnly("com.tencent.tinker:tinker-android-anno:${TINKER_VERSION}")
+
+    //test
+    testImplementation rootProject.ext.dependencies["junit"]
+    debugImplementation rootProject.ext.dependencies["canary-debug"]
+    releaseImplementation rootProject.ext.dependencies["canary-release"]
+    testImplementation rootProject.ext.dependencies["canary-release"]
+}
+
+ext {
+    tinkerEnable = true
+    tinkerOldApkPath = "${bakPath}/tinkergradle-0218-12-22-06"
+    tinkerApplyMappingPath = "${bakPath}/tinkergradle-0218-12-22-06"
+    tinkerApplyResourcePath = "${bakPath}/tinkergradle-0218-12-22-06"
+    tinkerBuildFlavorDirectory = "${bakPath}/tinkergradle-0218-12-22-06"
+    tinkerID = "1.1.0"
+
+}
+
+//相应的判断方法
+def buildWithTinker() {
+    return ext.tinkerEnable
+}
+//获取oldApk的输出路径--必须输入否则会报错
+def getOldApkPath() {
+    return ext.tinkerOldApkPath
+}
+//定义打包基准apk所用的混淆文件
+def getApplyMappingPath() {
+    return ext.tinkerApplyMappingPath
+}
+
+//定义打包基准apk所用的资源文件
+def getApplyResourceMappingPath() {
+    return ext.tinkerApplyResourcePath
+}
+
+def getTinkerIdValue() {
+    return ext.tinkerID
+}
+
+def getTinkerBuildFlavorDirectory() {
+    return ext.tinkerBuildFlavorDirectory
+}
+
+//判断是否启用tinker，因为在debug之下是不需要开启tinker的
+if (buildWithTinker()) {
+
+    //启用tinker功能
+    apply plugin: 'com.tencent.tinker.patch'
+
+    //所有tinker相关参数配置
+    tinkerPatch {
+        oldApk = getOldApkPath() //指定old apk文件径
+        ignoreWarning = false   //不忽略tinker的警告，有警告则中止patch文件的生成
+        useSign = true  //强制patch文件也使用签名
+        tinkerEnable = buildWithTinker() //指定是否启用tinker
+
+        buildConfig {    //编译相关的配置项
+            //四个必须配置的属性start
+            applyMapping = getApplyMappingPath() //指定old apk(基准apk)打包时所使用的混淆文件
+            applyResourceMapping = getApplyResourceMappingPath() //指定old apk的资源文件
+            tinkerId = getTinkerIdValue()
+            //指定TinkerID，在运行过程中，我们需要验证基准apk包的tinkerId是否等于补丁包的tinkerId。这个是决定补丁包能运行在哪些基准包上面，一般来说我们可以使用git版本号、versionName等等
+            keepDexApply = false //通常设置为false；若设置为true开启keepDexApply模式，补丁包会根据基准包的类分布来进行动态编译
+            //四个必须配置的属性end
+        }
+
+        dex {//dex相关的配置项
+            dexMode = "jar" //对于'jar'模式，我们将会把输入dex重新压缩封装到jar,生成的patch要小一些
+            //这一项非常重要，它定义了哪些类在加载补丁包的时候会用到。这些类是通过Tinker无法修改的类，
+            // 也是一定要放在main dex的类
+            //需要处理dex路径，支持*、?通配符，必须使用'/'分割。路径是相对安装包的，例如assets/...
+            pattern = ["classes*.dex", "assets/secondary-dex-?.jar"]//通配符 表明我们要处理的dex文件都在哪些路径下
+            /**
+             * 这里需要定义的类：
+             * 1. 你自己定义的Application类；
+             * 2. Tinker库中用于加载补丁包的部分类，即com.tencent.tinker.loader.*；
+             * 3. 如果你自定义了TinkerLoader，需要将它以及它引用的所有类也加入loader中；
+             * 4. 其他一些你不希望被更改的类，例如Sample中的BaseBuildInfo类。这里需要注意的是，这些类的直接引用类也需要加入到loader中。或者你需要将这个类变成非preverify。
+             * 5. 使用1.7.6版本之后的gradle版本，参数1、2会自动填写。若使用newApk或者命令行版本编译，1、2依然需要手动填写*/
+            loader = ["com.zng.tinkergradle.tinker.MyTinkerApp"] //指定加载patch文件时用到的类
+        }
+
+        lib {//lib相关的配置项
+            pattern = ["libs/*/*.so"]
+
+        }
+
+        res {//res相关的配置项
+            //指定tinker可以修改的资源路径 只有满足pattern的资源才会放到合成后的资源包
+            pattern = ["res/*", "assets/*", "resources.arsc", "AndroidManifest.xml"]
+            //ignoreChange与上面的pattern一致，即会完全忽略所有资源的修改
+            ignoreChange = ["assets/sample_meta.txt"] //指定不受影响的资源路径
+            largeModSize = 100 //资源修改大小默认值,如果大于largeModSize，我们将使用bsdiff算法,默认大小为100kb
+        }
+
+        packageConfig {//用于生成补丁包中的'package_meta.txt'文件
+            configField("patchMessage", "fix the 1.1.0 version's bugs")
+
+            configField("patchVersion", "1.1.0")
+        }
+    }
+}
+
+//判断是否是多渠道打包
+List<String> flavors = new ArrayList<>();
+project.android.productFlavors.each { flavor ->
+    flavors.add(flavor.name)
+}
+boolean hasFlavors = flavors.size() > 0
+/**
+ * 复制基准包和其它必须文件到指定目录
+ */
+
+android.applicationVariants.all { variant ->
+    /**
+     * task type, you want to bak
+     */
+    def taskName = variant.name
+    def date = new Date().format("MMdd-HH-mm-ss")
+
+    tasks.all {
+        if ("assemble${taskName.capitalize()}".equalsIgnoreCase(it.name)) {
+
+            it.doLast {
+                copy {
+                    def fileNamePrefix = "${project.name}-${variant.baseName}"
+                    def newFileNamePrefix = hasFlavors ? "${fileNamePrefix}" : "${fileNamePrefix}-${date}"
+
+                    def destPath = hasFlavors ? file("${bakPath}/${project.name}-${date}/${variant.flavorName}") : bakPath
+                    from variant.outputs[0].outputFile
+                    into destPath
+                    rename { String fileName ->
+                        fileName.replace("${fileNamePrefix}.apk", "${newFileNamePrefix}.apk")
+                    }
+
+                    from "${buildDir}/outputs/mapping/${variant.dirName}/mapping.txt"
+                    into destPath
+                    rename { String fileName ->
+                        fileName.replace("mapping.txt", "${newFileNamePrefix}-mapping.txt")
+                    }
+
+                    from "${buildDir}/intermediates/symbols/${variant.dirName}/R.txt"
+                    into destPath
+                    rename { String fileName ->
+                        fileName.replace("R.txt", "${newFileNamePrefix}-R.txt")
+                    }
+                }
+            }
+        }
+    }
+}
+
+project.afterEvaluate {
+    if (hasFlavors) {
+        task(tinkerPatchAllFlavorRelease) {
+            group = 'tinker'
+            def originOldPath = getTinkerBuildFlavorDirectory()
+            for (String flavor : flavors) {
+                def tinkerTask = tasks.getByName("tinkerPatch${flavor.capitalize()}Release")
+                dependsOn tinkerTask
+                def preAssembleTask = tasks.getByName("process${flavor.capitalize()}ReleaseManifest")
+                preAssembleTask.doFirst {
+                    String flavorName = preAssembleTask.name.substring(7, 8).toLowerCase() + preAssembleTask.name.substring(8, preAssembleTask.name.length() - 15)
+                    project.tinkerPatch.oldApk = "${originOldPath}/${flavorName}/${project.name}-${flavorName}-release.apk"
+                    project.tinkerPatch.buildConfig.applyMapping = "${originOldPath}/${flavorName}/${project.name}-${flavorName}-release-mapping.txt"
+                    project.tinkerPatch.buildConfig.applyResourceMapping = "${originOldPath}/${flavorName}/${project.name}-${flavorName}-release-R.txt"
+                }
+            }
+        }
+
+        task(tinkerPatchAllFlavorDebug) {
+            group = 'tinker'
+            def originOldPath = getTinkerBuildFlavorDirectory()
+            for (String flavor : flavors) {
+                def tinkerTask = tasks.getByName("tinkerPatch${flavor.capitalize()}Debug")
+                dependsOn tinkerTask
+                def preAssembleTask = tasks.getByName("process${flavor.capitalize()}DebugManifest")
+                preAssembleTask.doFirst {
+                    String flavorName = preAssembleTask.name.substring(7, 8).toLowerCase() + preAssembleTask.name.substring(8, preAssembleTask.name.length() - 13)
+                    project.tinkerPatch.oldApk = "${originOldPath}/${flavorName}/${project.name}-${flavorName}-debug.apk"
+                    project.tinkerPatch.buildConfig.applyMapping = "${originOldPath}/${flavorName}/${project.name}-${flavorName}-debug-mapping.txt"
+                    project.tinkerPatch.buildConfig.applyResourceMapping = "${originOldPath}/${flavorName}/${project.name}-${flavorName}-debug-R.txt"
+                }
+
+            }
+        }
+    }
+}
+
