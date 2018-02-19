@@ -1,0 +1,3 @@
+# ZNGHTicketManage
+Mvp Demo
+该项目集成实时开票相关业务，公共库，dagger2相关学习Demo,Tinker命令行以及gradle配置方式进行热更新以及插件化相关概念理解。
